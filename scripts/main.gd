@@ -55,6 +55,11 @@ func _toggle_clues() -> void:
 	clue_panel.visible = not clue_panel.visible
 
 
+func get_clue_category(clue_id: String) -> String:
+	# 기존 단서처럼 분류가 없는 데이터도 그대로 사용할 수 있습니다.
+	return clue_definitions.get(clue_id, {}).get("category", "uncategorized")
+
+
 func _refresh_clues() -> void:
 	for child in clue_entries.get_children():
 		clue_entries.remove_child(child)
@@ -65,11 +70,12 @@ func _refresh_clues() -> void:
 		return
 	for clue_id in acquired_clue_ids:
 		var clue: Dictionary = clue_definitions[clue_id]
-		_add_clue_label(clue["name"], 24)
+		var name_label := _add_clue_label(clue["name"], 24)
+		name_label.set_meta("category", get_clue_category(clue_id))
 		_add_clue_label(clue["description"])
 
 
-func _add_clue_label(content: String, font_size: int = 20) -> void:
+func _add_clue_label(content: String, font_size: int = 20) -> Label:
 	var label := Label.new()
 	label.text = content
 	# 자동 줄바꿈의 기준 폭을 보장하고, 긴 설명의 행간을 확보합니다.
@@ -79,3 +85,4 @@ func _add_clue_label(content: String, font_size: int = 20) -> void:
 	label.add_theme_constant_override("line_spacing", 6)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	clue_entries.add_child(label)
+	return label
