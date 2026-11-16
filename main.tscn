@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/investigation_target.gd" id="2_target"]
+[ext_resource type="PackedScene" path="res://scenes/inference_board.tscn" id="3_board"]
 
 [node name="Main" type="Node2D" unique_id=2051444941]
 script = ExtResource("1_main")
@@ -129,6 +130,16 @@ offset_right = 1232.0
 offset_bottom = 96.0
 theme_override_font_sizes/font_size = 22
 text = "단서 목록 (0)"
+
+[node name="InferenceToggle" type="Button" parent="Interface/Screen"]
+offset_left = 820.0
+offset_top = 40.0
+offset_right = 1000.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 22
+text = "추론 보드"
+
+[node name="InferenceBoard" parent="Interface/Screen" instance=ExtResource("3_board")]
 
 [node name="CluePanel" type="PanelContainer" parent="Interface/Screen"]
 visible = false

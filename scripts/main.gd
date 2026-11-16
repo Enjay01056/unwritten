@@ -11,6 +11,7 @@ var acquired_clue_ids: Array[String] = []
 @onready var clue_panel: PanelContainer = $Interface/Screen/CluePanel
 @onready var clue_entries: VBoxContainer = $Interface/Screen/CluePanel/Padding/Layout/Scroll/Entries
 @onready var clue_toggle: Button = $Interface/Screen/ClueToggle
+@onready var inference_board = $Interface/Screen/InferenceBoard
 
 
 func _ready() -> void:
@@ -19,6 +20,8 @@ func _ready() -> void:
 		target.pressed.connect(_investigate.bind(target.target_id))
 	clue_toggle.pressed.connect(_toggle_clues)
 	$Interface/Screen/CluePanel/Padding/Layout/Close.pressed.connect(clue_panel.hide)
+	inference_board.setup(self)
+	$Interface/Screen/InferenceToggle.pressed.connect(_toggle_inference_board)
 	_refresh_clues()
 
 
@@ -55,6 +58,16 @@ func _toggle_clues() -> void:
 	clue_panel.visible = not clue_panel.visible
 
 
+func _toggle_inference_board() -> void:
+	inference_board.visible = not inference_board.visible
+	inference_board.refresh()
+
+
+func _on_clue_input(event: InputEvent, clue_id: String) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		inference_board.select_clue(clue_id)
+
+
 func get_clue_category(clue_id: String) -> String:
 	# 기존 단서처럼 분류가 없는 데이터도 그대로 사용할 수 있습니다.
 	return clue_definitions.get(clue_id, {}).get("category", "uncategorized")
@@ -72,6 +85,11 @@ func _refresh_clues() -> void:
 		var clue: Dictionary = clue_definitions[clue_id]
 		var name_label := _add_clue_label(clue["name"], 24)
 		name_label.set_meta("category", get_clue_category(clue_id))
+		name_label.mouse_filter = Control.MOUSE_FILTER_STOP
+		name_label.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		name_label.tooltip_text = "클릭하여 추론 보드의 빈 슬롯에 배치"
+		name_label.add_theme_color_override("font_color", Color("b9e1ee"))
+		name_label.gui_input.connect(_on_clue_input.bind(clue_id))
 		_add_clue_label(clue["description"])
 
 

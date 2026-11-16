@@ -1,0 +1,83 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/inference_board.gd" id="1_board"]
+
+[node name="InferenceBoard" type="PanelContainer"]
+visible = false
+offset_left = 48.0
+offset_top = 130.0
+offset_right = 850.0
+offset_bottom = 245.0
+script = ExtResource("1_board")
+
+[node name="Padding" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="Layout" type="VBoxContainer" parent="Padding"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Header" type="HBoxContainer" parent="Padding/Layout"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Padding/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "추론 보드 · 단서 이름 클릭 → A·B 배치 · 슬롯 클릭 → 해제"
+
+[node name="Close" type="Button" parent="Padding/Layout/Header"]
+layout_mode = 2
+text = "닫기"
+
+[node name="Body" type="HBoxContainer" parent="Padding/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Controls" type="VBoxContainer" parent="Padding/Layout/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Slots" type="HBoxContainer" parent="Padding/Layout/Body/Controls"]
+layout_mode = 2
+
+[node name="SlotA" type="Button" parent="Padding/Layout/Body/Controls/Slots"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "슬롯 A: 비어 있음"
+theme_override_font_sizes/font_size = 16
+
+[node name="SlotB" type="Button" parent="Padding/Layout/Body/Controls/Slots"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "슬롯 B: 비어 있음"
+theme_override_font_sizes/font_size = 16
+
+[node name="Actions" type="HBoxContainer" parent="Padding/Layout/Body/Controls"]
+layout_mode = 2
+
+[node name="Combine" type="Button" parent="Padding/Layout/Body/Controls/Actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "조합하기"
+
+[node name="Reset" type="Button" parent="Padding/Layout/Body/Controls/Actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "슬롯 초기화"
+
+[node name="Scroll" type="ScrollContainer" parent="Padding/Layout/Body"]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+
+[node name="Results" type="VBoxContainer" parent="Padding/Layout/Body/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
