@@ -1,0 +1,14 @@
+{
+  "clues": {
+    "clue_boat_01": {
+      "name": "오래된 목선",
+      "description": "영산포 포구에서 발견한 오래된 목선. 현재 조사 중인 왜곡 현상과 관련이 있을 수 있다."
+    }
+  },
+  "targets": {
+    "boat": {
+      "clue_id": "clue_boat_01",
+      "inspection_text": "오래된 목선이다. 배 안쪽에 무언가 남아 있다."
+    }
+  }
+}
